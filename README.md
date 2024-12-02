@@ -53,3 +53,7 @@ a library product for the Plugin target:
 ```
 
 More examples, see [EXAMPLES.md](EXAMPLES.md).
+
+## Logging
+
+The library also supports some basic logging using [swift-log](https://github.co/apple/swift-log).
