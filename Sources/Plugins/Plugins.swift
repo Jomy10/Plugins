@@ -7,6 +7,7 @@ let LIBEXT = "dylib"
 #elseif os(Windows)
 import ucrt
 let LIBEXT = "dll"
+#warning("Windows is currently not supported by Plugins library. This is on the roadmap")
 #elseif canImport(Glibc)
 import Glibc
 let LIBEXT = "so"

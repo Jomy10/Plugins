@@ -17,6 +17,9 @@ let package = Package(
       name: "Plugins",
       dependencies: [
         .product(name: "Logging", package: "swift-log")
+      ],
+      linkerSettings: [
+        .linkedLibrary("dl", .when(platforms: [.linux]))
       ]
     ),
     .testTarget(
