@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "PluginManager",
+  name: "Plugins",
   products: [
     .library(
       name: "Plugins",
