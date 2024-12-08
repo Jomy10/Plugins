@@ -1,5 +1,7 @@
 import Foundation
+#if !SWIFTPLUGINS_NO_LOGGING
 import Logging
+#endif
 
 #if canImport(Darwin)
 import Darwin
@@ -28,7 +30,9 @@ let LIBEXT = "so"
 /// A pliugin is a dynamic library that is loaded at runtime and exports
 /// certain functions. These functions can be loaded using `loadFunction`
 public final class Plugin {
+  #if !SWIFTPLUGINS_NO_LOGGING
   private static let logger = Logger(label: "be.jonaseveraert.Plugins")
+  #endif
 
   private typealias LoadPluginFunction = @convention(c) (UnsafeMutableRawPointer?) -> Int32
   private typealias UnloadPluginFunction = @convention(c) (UnsafeMutableRawPointer?) -> Void
@@ -71,7 +75,9 @@ public final class Plugin {
     self.name = name
 
     let libPath = location.appendingPathComponent("lib\(name).\(LIBEXT)")
+    #if !SWIFTPLUGINS_NO_LOGGING
     Self.logger.debug("Loading plugin \(name) at \(libPath.path)")
+    #endif
     guard let handle = libPath.path.withCString({ pathCStr in
       return dlopen(pathCStr, RTLD_LAZY)
     }) else {
@@ -141,7 +147,9 @@ public final class Plugin {
   public func loadFunction<FnType>(name functionName: String) -> PluginFunction<FnType>? {
     return functionName.withCString { nameCStr in
       guard let functionPtr = dlsym(self.handle, nameCStr) else {
+        #if !SWIFTPLUGINS_NO_LOGGING
         Self.logger.debug("Couldn't load plugin function \(functionName) for plugin \(self.name): \(String(cString: dlerror()))")
+        #endif
         return nil
       }
 
@@ -154,7 +162,9 @@ public final class Plugin {
       unloadFn(self.unloadData)
     }
     if dlclose(self.handle) != 0 {
+      #if !SWIFTPLUGINS_NO_LOGGING
       Self.logger.error("\(String(cString: dlerror()))")
+      #endif
     }
   }
 }
