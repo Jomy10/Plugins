@@ -1,8 +1,8 @@
 import Foundation
 import XCTest
-#if !SWIFTPLUGINS_NO_LOGGING
-import Logging
-#endif
+//#if !SWIFTPLUGINS_NO_LOGGING
+//import Logging
+//#endif
 @testable import Plugins
 
 final class PluginsTests: XCTestCase {
@@ -34,13 +34,13 @@ final class PluginsTests: XCTestCase {
     .appendingPathComponent("testPlugin.swift")
 
   override class func setUp() {
-    #if !SWIFTPLUGINS_NO_LOGGING
-    LoggingSystem.bootstrap { loggerId in
-      var handler = StreamLogHandler.standardError(label: loggerId)
-      handler.logLevel = .trace
-      return handler
-    }
-    #endif
+    //#if !SWIFTPLUGINS_NO_LOGGING
+    //LoggingSystem.bootstrap { loggerId in
+    //  var handler = StreamLogHandler.standardError(label: loggerId)
+    //  handler.logLevel = .trace
+    //  return handler
+    //}
+    //#endif
 
     try! pluginCode.write(to: Self.pluginSourceFile, atomically: true, encoding: .utf8)
 
