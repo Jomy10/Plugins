@@ -33,6 +33,10 @@ public final class Plugin {
   private typealias LoadPluginFunction = @convention(c) (UnsafeMutableRawPointer?) -> Int32
   private typealias UnloadPluginFunction = @convention(c) (UnsafeMutableRawPointer?) -> Void
 
+  public static var libExt: String {
+    return LIBEXT
+  }
+
   public let name: String
   private let handle: UnsafeMutableRawPointer
   private let unloadFn: UnloadPluginFunction?
